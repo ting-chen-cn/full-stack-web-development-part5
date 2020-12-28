@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-const Blog = ({ blog, likeBlog }) => {
+
+const Blog = ({ blog, likeBlog, user, remove }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -7,10 +8,12 @@ const Blog = ({ blog, likeBlog }) => {
     borderWidth: 1,
     marginBottom: 5,
   }
-
   const [visible, setVisible] = useState(false)
   const hideWhenVisible = { display: visible ? 'none' : '' }
   const showWhenVisible = { display: visible ? '' : 'none' }
+  const showDeletable = {
+    display: blog.user.username === user.username ? '' : 'none',
+  }
   const toggleVisibility = () => {
     setVisible(!visible)
   }
@@ -24,6 +27,12 @@ const Blog = ({ blog, likeBlog }) => {
       user: blog.user.id,
     }
     likeBlog(blogObject, blog.id)
+  }
+
+  const handleRemove = (event) => {
+    event.preventDefault()
+    window.confirm(`Remove blog ${blog.title} by ${blog.author}`)
+    remove(blog.id)
   }
   return (
     <div style={blogStyle}>
@@ -44,9 +53,11 @@ const Blog = ({ blog, likeBlog }) => {
           </p>
           <p>{blog.author}</p>
         </div>
+        <div style={showDeletable}>
+          <button onClick={handleRemove}>remove</button>
+        </div>
       </div>
     </div>
-    // </div>
   )
 }
 
