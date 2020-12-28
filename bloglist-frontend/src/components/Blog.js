@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-const Blog = ({ blogs }) => {
+const Blog = ({ blog, likeBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -7,46 +7,46 @@ const Blog = ({ blogs }) => {
     borderWidth: 1,
     marginBottom: 5,
   }
+
   const [visible, setVisible] = useState(false)
+  const hideWhenVisible = { display: visible ? 'none' : '' }
+  const showWhenVisible = { display: visible ? '' : 'none' }
   const toggleVisibility = () => {
     setVisible(!visible)
   }
-  const blogDetail = (blog) => {
-    return (
-      <div style={blogStyle}>
-        <p>
-          {blog.title}
-          <button>hide</button>
-        </p>
-        <p>{blog.url}</p>
-        <p>
-          likes {blog.likes}
-          <button>like</button>
-        </p>
-        <p>{blog.author}</p>
-      </div>
-    )
-  }
-  const show = (blog) => {
-    if (visible) {
-      return blogDetail(blog)
-    } else {
-      return null
+  const handleLike = (event) => {
+    event.preventDefault()
+    const blogObject = {
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      likes: blog.likes + 1,
+      user: blog.user.id,
     }
+    likeBlog(blogObject, blog.id)
   }
-
   return (
-    <div>
-      {blogs.map((blog) => {
-        return (
-          <div style={blogStyle}>
-            {blog.title} {blog.author}
-            <button onClick={toggleVisibility}>view</button>
-            <div>{show(blog)}</div>
-          </div>
-        )
-      })}
+    <div style={blogStyle}>
+      <div style={hideWhenVisible}>
+        {blog.title} {blog.author}
+        <button onClick={toggleVisibility}>view</button>
+      </div>
+      <div style={showWhenVisible}>
+        <div style={blogStyle}>
+          <p>
+            {blog.title}
+            <button onClick={toggleVisibility}>hide</button>
+          </p>
+          <p>{blog.url}</p>
+          <p>
+            likes {blog.likes}
+            <button onClick={handleLike}>like</button>
+          </p>
+          <p>{blog.author}</p>
+        </div>
+      </div>
     </div>
+    // </div>
   )
 }
 

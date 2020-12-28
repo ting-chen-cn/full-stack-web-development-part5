@@ -30,7 +30,6 @@ const App = () => {
   }, [])
 
   const handleCreate = (blogObject) => {
-    console.log(blogObject)
     blogFormRef.current.toggleVisibility()
     try {
       blogService.create(blogObject).then((returnedBlog) => {
@@ -44,6 +43,22 @@ const App = () => {
       }, 5000)
     } catch (exception) {
       setErrorMessage('Failed to add blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+  const likeBlog = (blogObject, id) => {
+    try {
+      blogService.updateLikes(blogObject, id)
+      blogService.getAll().then((blogs) => setBlogs(blogs))
+      setMessage(`${blogObject.title} is liked by ${user.username}`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
+    } catch (exception) {
+      setErrorMessage('Failed to add like')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -81,7 +96,9 @@ const App = () => {
       <Togglable buttonLabel='create new blog' ref={blogFormRef}>
         <CreateForm create={handleCreate} />
       </Togglable>
-      <Blog blogs={blogs} />
+      {blogs.map((blog) => (
+        <Blog key={blog.id} blog={blog} likeBlog={likeBlog} />
+      ))}
     </div>
   )
 }
