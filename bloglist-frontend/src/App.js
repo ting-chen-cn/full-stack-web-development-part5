@@ -16,7 +16,11 @@ const App = () => {
   const blogFormRef = useRef()
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs))
+    blogService
+      .getAll()
+      .then((blogs) =>
+        setBlogs(blogs.sort((a, b) => b.likes - a.likes))
+      )
   }, [])
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem(
@@ -52,7 +56,11 @@ const App = () => {
   const likeBlog = (blogObject, id) => {
     try {
       blogService.updateLikes(blogObject, id)
-      blogService.getAll().then((blogs) => setBlogs(blogs))
+      blogService
+        .getAll()
+        .then((blogs) =>
+          setBlogs(blogs.sort((a, b) => b.likes - a.likes))
+        )
       setMessage(`${blogObject.title} is liked by ${user.username}`)
       setTimeout(() => {
         setMessage(null)

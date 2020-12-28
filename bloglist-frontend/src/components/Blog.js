@@ -32,7 +32,7 @@ const Blog = ({ blog, likeBlog }) => {
         <button onClick={toggleVisibility}>view</button>
       </div>
       <div style={showWhenVisible}>
-        <div style={blogStyle}>
+        <div>
           <p>
             {blog.title}
             <button onClick={toggleVisibility}>hide</button>
