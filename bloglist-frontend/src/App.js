@@ -98,11 +98,14 @@ const App = () => {
 
   if (user === null) {
     return (
-      <LoginForm
-        setErrorMessage={setErrorMessage}
-        setMessage={setMessage}
-        setUser={setUser}
-      />
+      <div>
+        <ErrorNotification errorMessage={errorMessage} />
+        <LoginForm
+          setErrorMessage={setErrorMessage}
+          setMessage={setMessage}
+          setUser={setUser}
+        />
+      </div>
     )
   }
 
@@ -114,6 +117,7 @@ const App = () => {
       <>{user.username} logged in</>
       <button
         type='submit'
+        id='logoutButton'
         onClick={() => {
           window.localStorage.clear()
           setUser(null)

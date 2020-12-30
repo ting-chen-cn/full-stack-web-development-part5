@@ -35,7 +35,7 @@ const Blog = ({ blog, likeBlog, user, remove }) => {
     remove(blog.id)
   }
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blogForm'>
       <div style={hideWhenVisible} className='basicContent'>
         {blog.title} {blog.author}
         <button onClick={toggleVisibility}>view</button>
@@ -47,16 +47,18 @@ const Blog = ({ blog, likeBlog, user, remove }) => {
             <button onClick={toggleVisibility}>hide</button>
           </div>
           <div>{blog.url}</div>
-          <div>
-            likes {blog.likes}
-            <button onClick={handleLike} role='likeButton'>
+          <div className='likeDiv'>
+            likes {blog.likes}{' '}
+            <button onClick={handleLike} id='likeButton'>
               like
             </button>
           </div>
           <div>{blog.author}</div>
         </div>
         <div style={showDeletable}>
-          <button onClick={handleRemove}>remove</button>
+          <button onClick={handleRemove} id='removeButton'>
+            remove
+          </button>
         </div>
       </div>
     </div>

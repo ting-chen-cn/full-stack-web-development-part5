@@ -25,7 +25,9 @@ describe('tests for like button', () => {
     const viewButton = component.getByText('view')
     fireEvent.click(viewButton)
 
-    const likeButton = component.getByRole('likeButton')
+    const likeButton = component.container.querySelector(
+      '#likeButton'
+    )
 
     fireEvent.click(likeButton)
     fireEvent.click(likeButton)

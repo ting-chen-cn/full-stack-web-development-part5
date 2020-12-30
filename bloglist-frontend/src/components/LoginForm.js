@@ -26,7 +26,7 @@ const LoginForm = ({ setErrorMessage, setMessage, setUser }) => {
       setTimeout(() => {
         setMessage(null)
       }, 5000)
-    } catch (exception) {
+    } catch (error) {
       setErrorMessage('Wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
@@ -41,6 +41,7 @@ const LoginForm = ({ setErrorMessage, setMessage, setUser }) => {
         <div>
           username
           <input
+            id='username'
             value={username}
             onChange={({ target }) => setUsername(target.value)}
           />
@@ -48,12 +49,15 @@ const LoginForm = ({ setErrorMessage, setMessage, setUser }) => {
         <div>
           password
           <input
+            id='password'
             type='password'
             value={password}
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button type='submit'>login</button>
+        <button id='login-button' type='submit'>
+          login
+        </button>
       </form>
     </div>
   )
